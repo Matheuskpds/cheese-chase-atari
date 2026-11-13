@@ -1,0 +1,2 @@
+.\dasm.exe .\DFIRE.ASM -f3  OU .\dasm.exe .\DFIRE.ASM -f3 -o DragonFire.bin
+Rename-Item .\a.out DragonFire.bin
