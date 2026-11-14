@@ -1,0 +1,37 @@
+DOCUMENTAÇÃO DE ALTERAÇÕES NO CÓDIGO-FONTE (DRAGONFIRE - ATARI 2600)
+
+1. SUBSTITUIÇÃO DO SPRITE E CORES DO JOGADOR (PRÍNCIPE -> RATO)
+- Rótulos alterados: MAN0, MAN1, MAN2, MAN4 e MAN0C, MAN1C, MAN2C, MAN4C.
+- Descrição: Os bitmaps originais de 16 linhas do príncipe foram substituídos pelo sprite do rato (orientado de baixo para cima, conforme a leitura do kernel em P0GR), contendo orelhas, olho vazado (bit 0 na máscara), focinho, corpo, cauda e animação de caminhada nas patas nos quadros MAN1 e MAN2.
+- Os bits foram espelhados horizontalmente na tabela para coincidir com a lógica do registrador de reflexão P0REF (controlado por REFSHAD / PLAYERDX).
+- A paleta de cores do personagem (MAN0C a MAN4C) foi alterada para $62 (roxo escuro NTSC) em todas as 16 scanlines do sprite, preservando o alinhamento de página de memória ($1B00).
+
+2. ADAPTAÇÃO DA ANIMAÇÃO E CORES DE MORTE DO JOGADOR
+- Rótulos alterados: SUPINE, SUPINE1, SUPINE2 e SUPINEC, SUPINE1C, SUPINE2C.
+- Descrição: Os gráficos de morte que exibiam o príncipe caindo foram substituídos pelos quadros do rato mantendo sua forma/animação ao ser atingido. As tabelas de cores de morte (SUPINEC a SUPINE2C), que antes carregavam as cores da roupa do príncipe ($C8, $44, $18), foram atualizadas para manter a cor roxa ($62) do rato.
+
+3. REMOÇÃO DA MECÂNICA DE AGACHAR (KNEELING) NA FASE DA PONTE
+- Rótulos alterados: Bloco SKIP40 / SKIP09 / SKIP23.
+- Descrição: Foi removida a verificação do direcional para baixo (leitura do bit D5 da porta PLRCTL / SWCHA) durante a fase externa (GAMESTAT com bit 7 = 0). Com isso, o jogo deixou de forçar o frame estático MAN4 e de zerar a velocidade horizontal (PLAYERDX), mantendo apenas a mecânica de corrida e pulo.
+
+4. REMOÇÃO DO PROJÉTIL SUPERIOR (MANTENDO APENAS O FOGO RASTEIRO)
+- Rótulos alterados: DOCASTLE, SKIP04 e MOVERAT (MRATLOOP).
+- Descrição: No kernel da ponte, o hardware do Atari reutiliza o Player 1 (P1GR) em duas alturas distintas (fogo alto antes do rótulo RESET e fogo baixo após o RESET).
+  * Em DOCASTLE, o ponteiro indireto ARRWIND foi configurado para apontar inicialmente para a tabela vazia SPACE ($00), ocultando o projétil superior e evitando colisões de hardware (PPMMCX) na metade superior da faixa.
+  * Em SKIP04 (após o reposicionamento de P1 no meio do kernel), ARRWIND passa a carregar os bitmaps animados HFB0 e HFB1 para renderizar normalmente o fogo rasteiro.
+  * Na sub-rotina MOVERAT, o índice inicial do loop MRATLOOP foi alterado de LDX #1 para LDX #0, atualizando apenas o deslocamento horizontal (RATHM) e o temporizador (RATTIME) do obstáculo inferior.
+
+5. ALTERAÇÃO DO CENÁRIO SUPERIOR (TORRES DO CASTELO -> CASAS E CÉU AZUL)
+- Rótulos alterados: DOCASTLE, CASLOOP, CASTLE0 e CASTLE1.
+- Descrição:
+  * Céu e Cor das Casas: Na entrada do kernel DOCASTLE, o registrador de cor de fundo (BKCLR) foi alterado para $9A (azul-celeste NTSC) e a cor do Playfield (PFCLR) foi definida como $00 (preto) para desenhar a silhueta das casas.
+  * Geometria das Casas: As tabelas de 11 bytes CASTLE0 (registrador PF0) e CASTLE1 (registrador PF1) foram redesenhadas para substituir as ameias das torres por casas menores com telhado em degraus, janelas vazadas e base sólida ($F0 em PF0 e $80 em PF1 no índice Y=0).
+  * Correção de Buffer (Bug do risco vertical): Ao final de CASLOOP, a instrução STA T1 foi substituída por STY T1 (onde Y=0 após INY). No código original, STA T1 dependia de o último byte lido de CASTLE1 (Y=0) ser $00 para limpar o buffer gráfico temporário do Player 0 antes de entrar em WALKLOOP.
+
+6. TRANSFORMAÇÃO DO FOSSO E DA PONTE EM GRAMADO SÓLIDO
+- Rótulos alterados: SHIELDK, SHIELDLP e MOATLOOP.
+- Descrição:
+  * A cor do Playfield (PFCLR) na seção inferior do kernel foi alterada para $C6 (verde-grama NTSC).
+  * No loop SHIELDLP, a leitura da tabela SHIELD,X foi substituída por LDA #0 nos registradores P0GR e P1GR, removendo os 6 brasões/símbolos da tela sem alterar a contagem de scanlines.
+  * Os registradores PF0, PF1 e PF2 foram preenchidos com $FF após SHIELDLP, fechando as duas aberturas da ponte e unificando o chão.
+  * No final de MOATLOOP, a troca de cor de fundo (BKCLR) que desenhava a água azul (SEA / $84) foi removida, mantendo o piso verde contínuo até a barra inferior de pontuação (TIMLOOP1).
