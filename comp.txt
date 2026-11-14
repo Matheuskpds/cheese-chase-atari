@@ -1,2 +1,2 @@
-.\dasm.exe .\DFIRE.ASM -f3  OU .\dasm.exe .\DFIRE.ASM -f3 -o DragonFire.bin
-Rename-Item .\a.out DragonFire.bin
+.\dasm.exe .\DFIRE.ASM -f3
+Rename-Item .\a.out CheeseChase.bin
