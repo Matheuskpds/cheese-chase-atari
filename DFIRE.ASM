@@ -435,21 +435,7 @@ OUT23
 WRID	STA	PLAYERID
 		JMP	OUT16
 SKIP40
-; FORCE KNEELING MAN IF CASTLE AND DOWN STICK
-		BIT	GAMESTAT
-		BMI	SKIP07		; DOING DRAGON SCREEN
-		LDA	PLRCTL		; LOAD STICK
-		LDX	PLAYNO
-		BEQ	SKIP09
-		ASL
-		ASL
-		ASL
-		ASL
-SKIP09	AND	#$20
-		BNE	SKIP23
-		STA	PLAYERDX	;KNEELING MAN CAN'T MOVE
-		LDA	#MAN4 & $FF
-		BNE	SKIP75
+; AGACHAMENTO DESATIVADO - VAI DIRETO PARA ANIMACAO NORMAL
 SKIP23
 SKIP07
 		LDA	PLAYERDX
@@ -825,15 +811,10 @@ DOCASTLE
 		LDA	#$15
 		STA	PFCTRL
 ;
-		LDA	#(HFB0 >>8)
+		LDA	#(SPACE >> 8)
 		STA	ARRWIND+1
-		LDX	#(HFB0 & $FF)	;HORIZONTAL FIREBALL
-		LDA	FRAME
-		
-		AND	#4
-		BNE	SKIP41
-		LDX	#(HFB1 & $FF)
-SKIP41	STX	ARRWIND
+		LDX	#(SPACE & $FF)	;COMECA VAZIO (SEM FOGO EM CIMA)
+		STX	ARRWIND
 		LDX	#14
 		STX	T0				;COUNT FOR ARROW
 ;
@@ -920,6 +901,14 @@ RATLOOP	DEY
 		LDA	(P0INDCLR),Y
 		STA	P0CLR
 SKIP04	DEX
+		LDA	#(HFB0 >> 8)
+		STA	ARRWIND+1
+		LDY	#(HFB0 & $FF)
+		LDA	FRAME
+		AND	#4
+		BNE	SKIP04B
+		LDY	#(HFB1 & $FF)
+SKIP04B	STY	ARRWIND
 		LDY	#$9
 		STY	T0
 		JMP	MKERNEL
@@ -1010,9 +999,9 @@ MOVERAT	LDA	PLAYERID
 		JMP	SETUPDR
 SKIP06
 ;
-; MOVE RATS AND ARROWS
+; MOVE RATS AND ARROWS (APENAS INDICE 0 = FOGO RASTEIRO)
 ;
-		LDX	#1
+		LDX	#0
 MRATLOOP	LDY	RATTIME,X
 		BEQ	MOVE
 		DEC	RATTIME,X
@@ -2303,17 +2292,21 @@ DRAGON15
 
 
 MAN0
-	DC	$00, $C2, $42, $4E, $58, $50, $70, $30
-	DC	$30, $70, $78, $3C, $38, $60, $60, $60
+	; Frame 0 - Ratinho na direcao correta
+	DC	$00, $24, $1C, $7C, $3E, $3D, $79, $F9
+	DC	$5D, $3C, $28, $00, $00, $00, $00, $00
 MAN1
-	DC	$00, $60, $20, $24, $3C, $38, $30, $30
-	DC	$30, $30, $70, $38, $30, $60, $60, $60
+	; Frame 1 - Animacao dos pezinhos andando
+	DC	$00, $42, $1C, $7C, $3E, $3D, $79, $F9
+	DC	$5D, $3C, $28, $00, $00, $00, $00, $00
 MAN2
-	DC	$00, $18, $28, $18, $38, $70, $70, $30
-	DC	$30, $30, $F4, $B4, $38, $60, $60, $60
+	; Frame 2 - Animacao dos pezinhos juntos
+	DC	$00, $18, $1C, $7C, $3E, $3D, $79, $F9
+	DC	$5D, $3C, $28, $00, $00, $00, $00, $00
 MAN4
-	DC	$00, $7C, $60, $3C, $0E, $0E, $7E, $04
-	DC	$0C, $0C, $00, $00, $00, $00, $00, $00
+	; Mantido com 16 bytes para preservar o alinhamento da ROM
+	DC	$00, $24, $1C, $7C, $3E, $3D, $79, $F9
+	DC	$5D, $3C, $28, $00, $00, $00, $00, $00
 FB0
 	DC	$00, $10, $5A, $1A, $48, $42, $1A, $3C
 	DC	$6E, $FE, $3F, $6E, $3A, $3C, $18, $00
@@ -2322,14 +2315,17 @@ FB1
 	DC	$3D, $7A, $5E, $FE, $74, $19, $24, $08
 
 SUPINE
-	DC	$00, $00, $00, $00, $C2, $4E, $48, $7C
-	DC	$3E, $06, $06, $07, $3F, $03, $06, $06
+	; Frame 1 da morte: Rato dando um pulo/susto
+	DC	$00, $00, $42, $1C, $7C, $3E, $3D, $79
+	DC	$F9, $5D, $3C, $28, $00, $00, $00, $00
 SUPINE1
-	DC	$00, $00, $00, $30, $31, $99, $FF, $38
-	DC	$38, $78, $4C, $4F, $61, $20, $00, $00
+	; Frame 2 da morte: Rato virado de barriga e patinhas para cima
+	DC	$00, $3E, $7F, $F9, $79, $3D, $24, $24
+	DC	$00, $00, $00, $00, $00, $00, $00, $00
 SUPINE2
-	DC	$00, $00, $20, $3B, $0A, $0A, $0E, $9C
-	DC	$B8, $F0, $FC, $E4, $C4, $C0, $00, $00
+	; Frame 3 da morte: Rato piscando/sumindo no chao
+	DC	$00, $3E, $55, $AA, $24, $24, $00, $00
+	DC	$00, $00, $00, $00, $00, $00, $00, $00
 HFB0
 	DC	$00, $00, $04, $AA, $1F, $4A, $14, $00
 	DC	$00, $00, $00, $00, $00, $00, $00
@@ -2511,17 +2507,17 @@ DELAYS
 ;
 ; COLORS FOR 16 LINE GRAPHICS
 MAN0C
-	DC	$00, $C8, $C8, $C8, $C8, $C8, $44, $00
-	DC	$44, $44, $44, $44, $44, $18, $18, $12
+	DC	$58, $58, $58, $58, $58, $58, $58, $58
+	DC	$58, $58, $58, $58, $58, $58, $58, $58
 MAN1C
-	DC	$00, $C8, $C8, $C8, $C8, $C8, $44, $00
-	DC	$44, $44, $44, $44, $44, $18, $18, $12
+	DC	$58, $58, $58, $58, $58, $58, $58, $58
+	DC	$58, $58, $58, $58, $58, $58, $58, $58
 MAN2C
-	DC	$00, $C8, $C8, $C8, $C8, $C8, $44, $00
-	DC	$44, $44, $44, $44, $44, $18, $18, $12
+	DC	$58, $58, $58, $58, $58, $58, $58, $58
+	DC	$58, $58, $58, $58, $58, $58, $58, $58
 MAN4C
-	DC	$00, $C8, $C8, $C8, $44, $44, $44, $44
-	DC	$18, $18, $00, $00
+	DC	$58, $58, $58, $58, $58, $58, $58, $58
+	DC	$58, $58, $58, $58
 SCORESND 
 	DC	$05, $06, $07, $08
 FB0C
@@ -2531,14 +2527,14 @@ FB1C
 	DC	$00, $44, $44, $F6, $44, $44, $44, $44
 	DC	$44, $44, $44, $44, $44, $44, $44, $42
 SUPINEC
-	DC	$00, $C8, $C8, $C8, $C8, $C8, $C8, $C8
-	DC	$44, $00, $44, $44, $44, $44, $18, $12
+	DC	$58, $58, $58, $58, $58, $58, $58, $58
+	DC	$58, $58, $58, $58, $58, $58, $58, $58
 SUPINE1C
-	DC	$00, $12, $18, $18, $18, $44, $44, $44
-	DC	$44, $C8, $C8, $C8, $C8, $18, $18, $12
+	DC	$58, $58, $58, $58, $58, $58, $58, $58
+	DC	$58, $58, $58, $58, $58, $58, $58, $58
 SUPINE2C
-	DC	$00, $C8, $C8, $C8, $C8, $C8, $44, $00
-	DC	$44, $44, $44, $44, $18, $18, $18, $12
+	DC	$58, $58, $58, $58, $58, $58, $58, $58
+	DC	$58, $58, $58, $58, $58, $58, $58, $58
 SHIELD
 	DC	$00, $38, $44, $6C, $D6, $FE, $C6, $82
 	DC	$82, $00
