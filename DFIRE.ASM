@@ -808,6 +808,11 @@ CAVELOOP	STA	HSYNC
 ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 DOCASTLE
+		LDA	#$9A			; COR AZUL DO CEU
+		AND	ATTRACT
+		STA	BKCLR
+		LDA	#$00			; <--- ADICIONE ISSO: COR PRETA PARA A CASA
+		STA	PFCLR			; <--- ADICIONE ISSO: APLICA O PRETO NO PLAYFIELD
 		LDA	#$15
 		STA	PFCTRL
 ;
@@ -830,7 +835,7 @@ CASLOOP0	STA	HSYNC
 		DEY
 		BPL	CASLOOP
 		INY
-		STA	T1
+		STY	T1
 ;
 		LDA	RATHM
 		STA	T2				;SAVE HMOVE VALUE
@@ -914,7 +919,7 @@ SKIP04B	STY	ARRWIND
 		JMP	MKERNEL
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-; SHIELD KERNAL
+; SHIELD KERNAL (GRAMADO VERDE SEM SIMBOLOS E SEM AGUA)
 ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 SHIELDK
@@ -943,13 +948,12 @@ SHIELDK
 		STA	P0CLR
 		LDX	#9
 		STA	HSYNC
-		LDA	CAVESHAD
-		EOR	#$2
+		LDA	#$C6		; COR VERDE DA GRAMA (NTSC)
 		AND	ATTRACT
 		STA	PFCLR
 		STA	HSYNC
 SHIELDLP	STA	HSYNC
-		LDA	SHIELD,X
+		LDA	#0			; ZERA OS SIMBOLOS (SEM ESCUDOS)
 		STA	P1GR
 		STA	P0GR
 		DEX
@@ -957,7 +961,8 @@ SHIELDLP	STA	HSYNC
 ;
 ;
 		STA	HSYNC
-		LDY	#$80
+		LDY	#$FF		; PREENCHE O CHAO INTEIRO (SEM ARCOS DA PONTE)
+		STY	PF0
 		STY	PF1
 		STY	PF2
 
@@ -969,18 +974,11 @@ SHIELDLP	STA	HSYNC
 MOATLOOP	STA	HSYNC
 		DEY
 		BPL	MOATLOOP
-		LDA	SEA
-		STA	BKCLR
-		STA	HSYNC
-
-	IF PAL
-		LDA	#$B4
-	ELSE
-		LDA	#$84
-	ENDIF
-
+		LDA	#$C6		; MANTEM O VERDE DA GRAMA (SEM AGUA)
 		AND	ATTRACT
-		STA	BKCLR
+		STA	PFCLR
+		STA	HSYNC
+		STA	PFCLR
 ;
 ; RETURN TO MAIN SCREEN
 ;
@@ -2506,18 +2504,19 @@ DELAYS
 
 ;
 ; COLORS FOR 16 LINE GRAPHICS
+; COLORS FOR 16 LINE GRAPHICS
 MAN0C
-	DC	$58, $58, $58, $58, $58, $58, $58, $58
-	DC	$58, $58, $58, $58, $58, $58, $58, $58
+	DC	$62, $62, $62, $62, $62, $62, $62, $62
+	DC	$62, $62, $62, $62, $62, $62, $62, $62
 MAN1C
-	DC	$58, $58, $58, $58, $58, $58, $58, $58
-	DC	$58, $58, $58, $58, $58, $58, $58, $58
+	DC	$62, $62, $62, $62, $62, $62, $62, $62
+	DC	$62, $62, $62, $62, $62, $62, $62, $62
 MAN2C
-	DC	$58, $58, $58, $58, $58, $58, $58, $58
-	DC	$58, $58, $58, $58, $58, $58, $58, $58
+	DC	$62, $62, $62, $62, $62, $62, $62, $62
+	DC	$62, $62, $62, $62, $62, $62, $62, $62
 MAN4C
-	DC	$58, $58, $58, $58, $58, $58, $58, $58
-	DC	$58, $58, $58, $58
+	DC	$62, $62, $62, $62, $62, $62, $62, $62
+	DC	$62, $62, $62, $62
 SCORESND 
 	DC	$05, $06, $07, $08
 FB0C
@@ -2527,14 +2526,14 @@ FB1C
 	DC	$00, $44, $44, $F6, $44, $44, $44, $44
 	DC	$44, $44, $44, $44, $44, $44, $44, $42
 SUPINEC
-	DC	$58, $58, $58, $58, $58, $58, $58, $58
-	DC	$58, $58, $58, $58, $58, $58, $58, $58
+	DC	$62, $62, $62, $62, $62, $62, $62, $62
+	DC	$62, $62, $62, $62, $62, $62, $62, $62
 SUPINE1C
-	DC	$58, $58, $58, $58, $58, $58, $58, $58
-	DC	$58, $58, $58, $58, $58, $58, $58, $58
+	DC	$62, $62, $62, $62, $62, $62, $62, $62
+	DC	$62, $62, $62, $62, $62, $62, $62, $62
 SUPINE2C
-	DC	$58, $58, $58, $58, $58, $58, $58, $58
-	DC	$58, $58, $58, $58, $58, $58, $58, $58
+	DC	$62, $62, $62, $62, $62, $62, $62, $62
+	DC	$62, $62, $62, $62, $62, $62, $62, $62
 SHIELD
 	DC	$00, $38, $44, $6C, $D6, $FE, $C6, $82
 	DC	$82, $00
@@ -2690,11 +2689,13 @@ ATABLE
 	DC	$28, $32, $14, $1E, $00
 	DC	$0A
 CASTLE0
-	DC	$70, $70, $F0, $D0, $D0, $D0, $F0
-	DC	$F0, $50, $00, $00
-CASTLE1	
+	; De Y=0 (base solida) ate Y=10 (ceu aberto)
+	DC	$F0, $50, $F0, $F0, $F0, $70, $00
 	DC	$00, $00, $00, $00
-	DC	$00, $00, $80, $80, $80, $00, $00
+CASTLE1	
+	; De Y=0 (base solida) ate Y=10 (ceu aberto)
+	DC	$80, $80, $80, $C0, $00, $00, $00
+	DC	$00, $00, $00, $00 
 CTLS	
 	DC	$08
 	DC	$05, $01, $04, $0C
