@@ -1691,7 +1691,7 @@ OUT05	STA	CCLR
 ; TURN OFF FALAMING BIT OF DRAGSTAT
 STOPFL	LDA	#0
 		STA	DRAGSTAT
-		LDY	#6
+		LDY	#0
 		STY	EYETOP
 		DEY
 		STY	EYEBOT
@@ -2232,60 +2232,61 @@ FBSPEEDS	DC	2,2,2,2,2,3,3,3,4
 ;SKIP TO PAGE BOUNDRY
 	ORG	$1B00
 
-; DRAGON 3
+; GATO 3 - pernas juntas (anim $00)
 DRAGON8
-	DC	$2E, $6C, $F9, $FF, $BF, $3F, $7F, $FF
-	DC	$F7, $E0, $E0, $60, $30, $19, $1F, $0E
+	DC	$00, $00, $00, $00, $01, $01, $01, $01
+	DC	$01, $03, $0E, $0C, $0C, $0C, $03, $00
 DRAGON9
-	DC	$00, $F0, $FC, $FF, $FF, $FF, $FF, $8F
-	DC	$07, $03, $81, $4F, $C3, $9E, $02, $3E
+	DC	$71, $71, $71, $E1, $E1, $FF, $FF, $FF
+	DC	$FF, $FF, $3F, $00, $00, $00, $00, $00
 DRAGON10
-	DC	$70, $61, $F9, $F1, $FF, $FF, $FC, $F8
-	DC	$F1, $E0, $80, $00, $00, $02, $00, $10
+	DC	$F0, $F0, $F0, $D8, $CC, $F8, $F8, $FF
+	DC	$FF, $FF, $FB, $7F, $1F, $18, $10, $00
 DRAGON11
-	DC	$00, $20, $90, $F8, $FF, $EF, $F8, $70
-	DC	$E0, $00, $00, $00, $40, $00, $00, $00
+	DC	$00, $00, $00, $00, $00, $00, $00, $C0
+	DC	$E0, $F0, $B0, $E0, $E0, $60, $20, $00
 
-; DRAGON 2
+; GATO 2 - intermediario (anim $40)
 DRAGON4
-	DC	$38, $70, $F8, $7F, $3F, $3F, $FF, $FF
-	DC	$F3, $E0, $60, $30, $11, $1F, $0E, $00
+	DC	$00, $00, $00, $01, $01, $01, $01, $01
+	DC	$01, $03, $0E, $0C, $0C, $0C, $03, $00
 DRAGON5
-	DC	$00, $78, $FE, $FF, $FF, $FF, $FF, $CF
-	DC	$87, $C3, $47, $C1, $8F, $02, $1E, $00
+	DC	$C1, $C1, $C1, $C1, $E1, $FF, $FF, $FF
+	DC	$FF, $FF, $3F, $00, $00, $00, $00, $00
 DRAGON6
-	DC	$EC, $D9, $F9, $F1, $FF, $FF, $FC, $F8
-	DC	$F1, $E0, $80, $00, $00, $00, $00, $00
+	DC	$CC, $CC, $CC, $CC, $CC, $F8, $F8, $FF
+	DC	$FF, $FF, $FB, $7F, $1F, $18, $10, $00
 DRAGON7
-	DC	$00, $20, $90, $F8, $FF, $EF, $F9, $70
-	DC	$E0, $00, $04, $08, $10, $40, $00, $00
+	DC	$00, $00, $00, $00, $00, $00, $00, $C0
+	DC	$E0, $F0, $B0, $E0, $E0, $60, $20, $00
 
-; DRAGON 1
+; GATO 1 - parado / referencia (anim $80)
 DRAGON0
-	DC	$7E, $30, $71, $7B, $7F, $3F, $7F, $FF
-	DC	$F7, $E0, $E0, $60, $30, $19, $1F, $0E
+	DC	$00, $00, $00, $01, $01, $01, $01, $01
+	DC	$01, $03, $0E, $0C, $0C, $0C, $03, $00
 DRAGON1
-	DC	$00, $F0, $FC, $FF, $FF, $FF, $FF, $8F
-	DC	$07, $03, $87, $41, $CF, $82, $1E, $21
+	DC	$E0, $E0, $E0, $81, $E1, $FF, $FF, $FF
+	DC	$FF, $FF, $3F, $00, $00, $00, $00, $00
 DRAGON2
-	DC	$38, $61, $E1, $F1, $FF, $FF, $F8, $F0
-	DC	$E1, $C0, $80, $00, $00, $00, $00, $00
+	DC	$E6, $E6, $E6, $CC, $CC, $F8, $F8, $FF
+	DC	$FF, $FF, $FB, $7F, $1F, $18, $10, $00
 DRAGON3
-	DC	$00, $20, $90, $F8, $FF, $EF, $F9, $70
-	DC	$E1, $02, $04, $04, $08, $00, $00, $00
-;FLAMING DRAGON
+	DC	$00, $00, $00, $00, $00, $00, $00, $C0
+	DC	$E0, $F0, $B0, $E0, $E0, $60, $20, $00
+
+; GATO MORDENDO - boca aberta (anim $C0, ex-dragao com fogo)
 DRAGON12
-	DC	$7E, $30, $71, $7B, $7F, $3F, $7F, $FF
-	DC	$F7, $E0, $E0, $60, $30, $19, $1F, $0E
+	DC	$00, $00, $00, $01, $01, $01, $01, $01
+	DC	$01, $03, $0E, $0C, $0C, $0C, $03, $00
 DRAGON13
-	DC	$00, $F0, $FC, $FF, $FF, $FF, $FF, $8F
-	DC	$07, $03, $87, $41, $CF, $82, $1E, $21
+	DC	$E0, $E0, $E0, $81, $E1, $FF, $FF, $FF
+	DC	$FF, $FF, $3F, $00, $00, $00, $00, $00
 DRAGON14
-	DC	$70, $6E, $F8, $FC, $FF, $FF, $FB, $F1
-	DC	$EB, $CB, $8F, $06, $03, $03, $07, $0E
+	DC	$E6, $E6, $E6, $CC, $CC, $F8, $F8, $FE
+	DC	$FF, $FF, $FB, $7F, $1F, $18, $10, $00
 DRAGON15
-	DC	$00, $00, $00, $00, $00, $80, $C0, $C0
-	DC	$F0, $E0, $E8, $F0, $E0, $30, $10, $18
+	DC	$00, $00, $00, $00, $00, $00, $00, $00
+	DC	$E0, $F0, $B0, $E0, $E0, $60, $20, $00
 
 
 
