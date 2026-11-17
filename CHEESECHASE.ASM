@@ -564,9 +564,8 @@ SKIP29	CMP	#WINDOW
 		LDX	#FIRES		;START SOUND
 		JSR	STARTSND
 		LDX	T1
-		LDA	#17			;SET UP FLAME
+		LDA	#0			;SET UP FLAME
 		STA	EYETOP
-		LDA	#10
 		STA	EYEBOT
 		LDA	#0
 		STA	P0YS,X
@@ -1342,12 +1341,11 @@ ENDK
 ; DRAGON KERNEL
 ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-		LDA	DRAGSTAT			; TURN ON FLAME?
-		ROL
-		ROL
-		ROL
-		ROL
-		STA	BGR
+                LDA	#0
+                STA	BGR			; bola sempre desligada
+                LDA	DRAGSTAT		; (so para manter o tempo)
+                NOP
+                NOP
 ;
 		LDX	WAVENO
 		LDA	#$4C				; FLAME COLOR
