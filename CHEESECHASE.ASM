@@ -2393,52 +2393,52 @@ BRKS	DC	(BRK1 & $FF),(BRK2 & $FF),(BRK3 & $FF),$FF
 	DC	$00, $00, $00
 
 ATREAS
-DIAMD0
-	DC	$00, $10, $28, $28, $54, $54, $BA, $54
-	DC	$28, $10
-DIAMD1
-	DC	$00, $10, $28, $28, $54, $54
-	DC	$BA, $54, $28, $10
-CROWN0
-	DC	$00, $7E, $7E, $5A
-	DC	$5A, $00, $81, $00, $24, $00
-CROWN1
-	DC	$00, $7E
-	DC	$7E, $5A, $5A, $00, $00, $42, $18, $00
+DIAMD0                          ; queijo, quadro 1
+ DC $00, $7E, $FF, $F7, $FF, $DF, $FE, $7A
+ DC $1E, $06
+DIAMD1                          ; queijo, quadro 2
+ DC $00, $7E, $FF, $FD, $EF, $FF, $FA, $6E
+ DC $1E, $06
+CROWN0                          ; peixe, quadro 1
+ DC $00, $00, $1C, $BE, $FF, $FD, $BE, $1C
+ DC $00, $00
+CROWN1                          ; peixe, quadro 2
+ DC $00, $00, $9C, $7E, $FF, $FD, $7E, $9C
+ DC $00, $00
 BRK1
-HARPL0
-	DC	$00, $7E, $95, $95, $95, $95, $56, $56
-	DC	$42, $81
-HARPL1
-	DC	$00, $7E, $A9, $A9, $A9, $A9
-	DC	$6A, $6A, $42, $81
+HARPL0                          ; pizza, quadro 1
+ DC $00, $08, $18, $18, $3C, $5C, $7E, $7A
+ DC $FF, $FF
+HARPL1                          ; pizza, quadro 2
+ DC $00, $08, $18, $18, $3C, $3A, $7E, $5E
+ DC $FF, $FF
 TREAS
-CHEST	
-	DC	$00, $7E, $7E, $7E
-	DC	$66, $FF, $54, $28, $00, $00
+CHEST                           ; presunto
+ DC $00, $24, $24, $18, $3C, $7E, $FF, $FF
+ DC $7E, $3C
 BRK2
-HELMET	
-	DC	$00, $42
-	DC	$66, $66, $42, $E7, $BD, $BD, $99, $42
-CHEST1
-	DC	$00, $7C, $38, $10, $38, $10, $38, $6C
-	DC	$AA, $AA
+HELMET                          ; maca
+ DC $00, $00, $3C, $7E, $FF, $FF, $FF, $66
+ DC $08, $00
+CHEST1                          ; hamburguer
+ DC $00, $3C, $7E, $FF, $FF, $DB, $FF, $7E
+ DC $3C, $00
 BRK3
-LAMP	
-	DC	$00, $3C, $18, $FE, $BF, $AD
-	DC	$E1, $00, $00, $00
-URN
-	DC	$00, $7C, $38, $10
-	DC	$38, $10, $38, $7C, $FE, $FE
-JUG	
-	DC	$00, $3C
-	DC	$7E, $FF, $BF, $DF, $7E, $3C, $3C, $7E
-DOOR
-	DC	$00, $FF, $FE, $FF, $DF, $FF, $FE, $FF
-	DC	$FF, $7E
-ODOOR
-	DC	$00, $8F, $8E, $8F, $8B, $8F
-	DC	$8E, $8F, $C7, $7E
+LAMP                            ; rosquinha
+ DC $00, $00, $3C, $7E, $E7, $C3, $E7, $7E
+ DC $3C, $00
+URN                             ; tigela de leite (larga, com leite acima da borda)
+ DC $00, $3C, $3C, $7E, $7E, $FF, $7E, $3C
+ DC $18, $00
+JUG                             ; garrafa de leite
+ DC $00, $7E, $7E, $7E, $7E, $7E, $3C, $18
+ DC $18, $00
+DOOR                            ; toca de rato tapada (fresta)
+ DC $00, $FF, $E7, $E7, $E7, $E7, $E7, $FF
+ DC $FF, $FF
+ODOOR                           ; toca de rato aberta (arco)
+ DC $00, $C3, $C3, $C3, $C3, $C3, $C3, $E7
+ DC $FF, $FF
 SPACE
 SPACE10
 	DC	$00, $00, $00, $00
@@ -2622,48 +2622,48 @@ OUT43
 ;
 TREASCLR
 
-DIAMD0C
-	DC	$00, $FF, $FF, $FF, $FF, $88, $88, $88
-	DC	$FF, $FF
+DIAMD0C                         ; queijo amarelo, casca laranja
+ DC $00, $2A, $1E, $1E, $1E, $1E, $1E, $1E
+ DC $1E, $1E
 DIAMD1C
-	DC	$00, $FA, $FA, $FA, $FA, $88
-	DC	$FF, $88, $FA, $FA 
-CROWN0C	
-	DC	$00, $28, $44, $28
-	DC	$28, $28, $28, $00, $78, $00
-CROWN1C	
-	DC	$00, $28
-	DC	$44, $28, $28, $28, $28, $00, $78, $00
-HARPL0C
-	DC	$00, $D8, $88, $88, $88, $88, $88, $88
-	DC	$88, $FF
+ DC $00, $2A, $1E, $1E, $1E, $1E, $1E, $1E
+ DC $1E, $1E
+CROWN0C                         ; peixe azul, barriga mais clara
+ DC $00, $00, $9A, $9A, $9E, $9E, $9A, $9A
+ DC $00, $00
+CROWN1C
+ DC $00, $00, $9A, $9A, $9E, $9E, $9A, $9A
+ DC $00, $00
+HARPL0C                         ; pizza: ponta amarela, calabresa vermelha, borda dourada
+ DC $00, $1E, $1E, $1E, $1E, $3A, $1E, $3A
+ DC $2A, $2A
 HARPL1C
-	DC	$00, $D8, $88, $88, $88, $88
-	DC	$88, $88, $88, $FF
-CHESTC	
-	DC	$00, $14, $14, $14
-	DC	$14, $12, $FC, $FC, $00, $00
-HELMETC	
-	DC	$00, $88
-	DC	$88, $88, $18, $18, $18, $18, $18, $18
-CHEST1C
-	DC	$00, $16, $44, $16, $44, $16, $16, $16
-	DC	$FF, $FF
-LAMPC	
-	DC	$00, $88, $14, $14, $14, $14
-	DC	$14, $00, $00, $00
-URNC	
-	DC	$44, $44, $14, $44
-	DC	$14, $44, $44, $44, $44, $14
-JUGC	
-	DC	$00, $18
-	DC	$88, $18, $18, $18, $18, $88, $88, $18
-DOORC
-	DC	$00, $12, $12, $16, $12, $12, $12, $16
-	DC	$12, $12
-ODOORC	
-	DC	$00, $12, $12, $16, $12, $12
-	DC	$12, $16, $12, $12
+ DC $00, $1E, $1E, $1E, $1E, $3A, $1E, $3A
+ DC $2A, $2A
+CHESTC                          ; presunto rosado, osso branco
+ DC $00, $0E, $0E, $0E, $4A, $4A, $4E, $4E
+ DC $4A, $4A
+HELMETC                         ; maca vermelha, cabinho verde
+ DC $00, $00, $44, $44, $44, $46, $46, $44
+ DC $C6, $00
+CHEST1C                         ; hamburguer: pao, carne, queijo, alface, tomate
+ DC $00, $2A, $2A, $F4, $1E, $C6, $44, $2A
+ DC $2A, $00
+LAMPC                           ; rosquinha: massa dourada, cobertura rosa
+ DC $00, $00, $2A, $2A, $2A, $2A, $4A, $4A
+ DC $4A, $00
+URNC                            ; tigela azul, borda clara, leite branco no topo
+ DC $00, $84, $84, $84, $84, $88, $0E, $0E
+ DC $0E, $00
+JUGC                            ; garrafa branca, tampa vermelha
+ DC $00, $0E, $0E, $0E, $0E, $0E, $0E, $4A
+ DC $4A, $00
+DOORC                           ; parede de tijolo (cores originais mantidas)
+ DC $00, $12, $12, $16, $12, $12, $12, $16
+ DC $12, $12
+ODOORC
+ DC $00, $12, $12, $16, $12, $12
+ DC $12, $16, $12, $12
 MAXLIMS	
 	DC	$94, $87
 MINLIMS
