@@ -35,3 +35,17 @@ DOCUMENTAÇÃO DE ALTERAÇÕES NO CÓDIGO-FONTE (DRAGONFIRE - ATARI 2600)
   * No loop SHIELDLP, a leitura da tabela SHIELD,X foi substituída por LDA #0 nos registradores P0GR e P1GR, removendo os 6 brasões/símbolos da tela sem alterar a contagem de scanlines.
   * Os registradores PF0, PF1 e PF2 foram preenchidos com $FF após SHIELDLP, fechando as duas aberturas da ponte e unificando o chão.
   * No final de MOATLOOP, a troca de cor de fundo (BKCLR) que desenhava a água azul (SEA / $84) foi removida, mantendo o piso verde contínuo até a barra inferior de pontuação (TIMLOOP1).
+
+7. SUBSTITUIÇÃO DOS SPRITES DOS TESOUROS E DAS PORTAS (TEMA GATO E RATO)
+- Rótulos alterados: DIAMD0, DIAMD1, CROWN0, CROWN1, HARPL0, HARPL1, CHEST, HELMET, CHEST1, LAMP, URN, JUG, DOOR, ODOOR e as tabelas de cores DIAMD0C, DIAMD1C, CROWN0C, CROWN1C, HARPL0C, HARPL1C, CHESTC, HELMETC, CHEST1C, LAMPC, URNC, JUGC.
+- Descrição: Os bitmaps dos tesouros foram substituídos por comidas e itens do tema gato e rato, mantendo os mesmos rótulos, o tamanho de 10 bytes por sprite e a orientação de baixo para cima (primeiro byte = linha inferior). As tabelas de cores seguem o mesmo tamanho e foram redefinidas em valores NTSC.
+  * DIAMD0/DIAMD1: queijo com buracos. Os dois quadros alternam a posição dos buracos. Cores: $1E (amarelo) no corpo e $2A (laranja) na casca.
+  * CROWN0/CROWN1: peixe virado para a direita. Os dois quadros alternam a posição do rabo. Cores: $9A (azul) no corpo e $9E (azul claro) na barriga.
+  * HARPL0/HARPL1: fatia de pizza. Os dois quadros alternam a posição das calabresas. Cores: $1E (queijo), $3A (calabresa) e $2A (borda).
+  * CHEST: presunto com osso. Cores: $4A (rosa), $4E (rosa claro, realce) e $0E (osso branco).
+  * HELMET: maçã com cabinho. Cores: $44 e $46 (vermelho) e $C6 (cabinho verde).
+  * CHEST1: hambúrguer. Cores por linha: $2A (pão), $F4 (carne), $1E (queijo), $C6 (alface) e $44 (tomate).
+  * LAMP: rosquinha com furo central. Cores: $2A (massa) e $4A (cobertura rosa).
+  * URN: tigela de leite larga, com base pequena, borda e leite acima da borda. Cores: $84 (corpo azul), $88 (borda) e $0E (leite).
+  * JUG: garrafa de leite com tampa. Cores: $0E (garrafa branca) e $4A (tampa vermelha).
+  * DOOR/ODOOR: as portas viraram toca de rato na parede. DOOR é a toca tapada, com apenas uma fresta central de 2 bits. ODOOR é a toca aberta, com um arco de 4 bits de largura que termina em 2 bits no topo. As tabelas DOORC e ODOORC foram mantidas, preservando a textura de tijolo da parede, e o buraco aparece escuro por mostrar o fundo.
