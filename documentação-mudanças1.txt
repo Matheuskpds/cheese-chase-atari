@@ -49,3 +49,7 @@ DOCUMENTAÇÃO DE ALTERAÇÕES NO CÓDIGO-FONTE (DRAGONFIRE - ATARI 2600)
   * URN: tigela de leite larga, com base pequena, borda e leite acima da borda. Cores: $84 (corpo azul), $88 (borda) e $0E (leite).
   * JUG: garrafa de leite com tampa. Cores: $0E (garrafa branca) e $4A (tampa vermelha).
   * DOOR/ODOOR: as portas viraram toca de rato na parede. DOOR é a toca tapada, com apenas uma fresta central de 2 bits. ODOOR é a toca aberta, com um arco de 4 bits de largura que termina em 2 bits no topo. As tabelas DOORC e ODOORC foram mantidas, preservando a textura de tijolo da parede, e o buraco aparece escuro por mostrar o fundo.
+
+8. REMOÇÃO DOS DETALHES QUADRICULADOS NO TOPO DA CAVERNA
+- Rótulos alterados: CAVE0, CAVE1 e CAVE2.
+- Descrição: A linha irregular do playfield foi zerada; as duas linhas superiores lisas e o kernel original foram mantidos. Isso remove o padrão de blocos que ainda lembrava ameias de castelo.
