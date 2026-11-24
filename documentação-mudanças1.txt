@@ -53,3 +53,23 @@ DOCUMENTAÇÃO DE ALTERAÇÕES NO CÓDIGO-FONTE (DRAGONFIRE - ATARI 2600)
 8. REMOÇÃO DOS DETALHES QUADRICULADOS NO TOPO DA CAVERNA
 - Rótulos alterados: CAVE0, CAVE1 e CAVE2.
 - Descrição: A linha irregular do playfield foi zerada; as duas linhas superiores lisas e o kernel original foram mantidos. Isso remove o padrão de blocos que ainda lembrava ameias de castelo.
+
+9. Nova mecânica ponte
+
+Funcionalidades novas
+- Velocidade variável: a cada lançamento o fogo sorteia 1, 2 ou 3 pixels por frame (2 com 50% de chance, 1 e 3 com 25% cada).
+- Ping-pong: ao chegar na borda direita (X=160), o fogo inverte o sentido e volta na mesma velocidade. Ao chegar na esquerda, estaciona e espera um tempo aleatório até o próximo lançamento.
+
+Mudanças no código
+1. **Equate novo:** `FXMAX EQU 160`, a borda direita onde o fogo inverte o sentido.
+2. **RAM:** a variável não usada `GSEL` virou `RATVEL`, a velocidade com sinal (positivo vai para a direita, negativo para a esquerda, 0 sorteia uma nova). Não foi preciso reservar RAM nova.
+3. **`RATHM EQU P0HMS`:** o HMOVE do fogo agora é calculado pela rotina `DOHMS` a partir de `P0XS`, a posição X do fogo. Isso permite mover o fogo com soma e subtração simples e deixa o kernel intacto.
+4. **`MOVERAT`:** o laço antigo que decrementava o HM foi substituído por uma rotina que soma `RATVEL` a `P0XS`, trata a batida na borda direita (inverte o sinal) e a chegada na esquerda (`PARK`, que sorteia a espera e zera a velocidade). O som de lançamento continua tocando quando o timer acaba.
+5. **Reinício após a morte do jogador:** o fogo volta para X=0, parado, com espera de $40 frames (cerca de 1 segundo) antes de sair de novo. Antes ele era colocado perto da borda direita.
+6. **`SETUPCA`:** passou a zerar `P0XS` e `RATVEL`, e deixou de gravar `RATHM`.
+
+Impacto
+- Kernel, sprites e tabelas continuam nos mesmos endereços.
+- A área de código antes do kernel termina em $14F4, abaixo do limite de $1500.
+- Não consegui montar nem testar no emulador. Só estimei os tamanhos e simulei a lógica em Python.
+- A posição de repouso do fogo mudou de X=2 para X=0, as duas escondidas pelo bloqueio de HMOVE.
