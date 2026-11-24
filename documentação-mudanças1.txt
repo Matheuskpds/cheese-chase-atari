@@ -73,3 +73,28 @@ Impacto
 - A área de código antes do kernel termina em $14F4, abaixo do limite de $1500.
 - Não consegui montar nem testar no emulador. Só estimei os tamanhos e simulei a lógica em Python.
 - A posição de repouso do fogo mudou de X=2 para X=0, as duas escondidas pelo bloqueio de HMOVE.
+
+
+1. Sprite do fogo do gato (dentro da casa)
+
+Local: labels FB0 e FB1.
+Antes: chama de 16 linhas.
+Agora: a mesma bolinha da ponte (HFB0/HFB1), com as linhas $38, $7C, $7C, $7C, $38, centralizada nos 16 bytes.
+Os dois quadros ficaram iguais, então a bolinha não pisca mais entre FB0 e FB1.
+Mantive 16 bytes por quadro, porque o código alterna entre FB0 e FB1 somando $10.
+A cor (FB0C/FB1C, $44) não foi alterada.
+Efeito colateral: a bolinha é menor que a chama antiga, então a área de colisão com o rato também é menor.
+
+2. Sprites da portinha de rato (estilo Tom & Jerry)
+
+Local: labels DOOR e ODOOR.
+DOOR (porta de baixo, por onde o rato entra na casa) agora é um arco pequeno: $00, $C3, $C3, $C3, $E7, $E7, $FF, $FF, $FF, $FF.
+ODOOR (porta de cima, aberta para o rato sair) agora é um arco mais alto: $00, $C3, $C3, $C3, $C3, $C3, $C3, $E7, $E7, $FF.
+Em ambas, o buraco é mais largo embaixo e mais estreito em cima.
+
+3. Cor da portinha
+
+Local: labels DOORC e ODOORC.
+Antes: tons de marrom-dourado alternados ($12 e $16).
+Agora: todas as linhas em amarelo $1E (padrão NTSC).
+Se ficar claro ou esverdeado demais, dá para trocar por $1C ou $1A.

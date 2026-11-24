@@ -2310,12 +2310,12 @@ MAN4
 	; Mantido com 16 bytes para preservar o alinhamento da ROM
 	DC	$00, $24, $1C, $7C, $3E, $3D, $79, $F9
 	DC	$5D, $3C, $28, $00, $00, $00, $00, $00
-FB0
-	DC	$00, $10, $5A, $1A, $48, $42, $1A, $3C
-	DC	$6E, $FE, $3F, $6E, $3A, $3C, $18, $00
-FB1
-	DC	$52, $08, $40, $12, $02, $48, $00, $98
-	DC	$3D, $7A, $5E, $FE, $74, $19, $24, $08
+FB0                             ; bolinha (mesmo desenho da bolinha da ponte)
+	DC	$00, $00, $00, $00, $00, $00, $38, $7C
+	DC	$7C, $7C, $38, $00, $00, $00, $00, $00
+FB1                             ; bolinha, quadro 2 (igual ao 1)
+	DC	$00, $00, $00, $00, $00, $00, $38, $7C
+	DC	$7C, $7C, $38, $00, $00, $00, $00, $00
 
 SUPINE
 	; Frame 1 da morte: Rato dando um pulo/susto
@@ -2439,12 +2439,12 @@ URN                             ; tigela de leite (larga, com leite acima da bor
 JUG                             ; garrafa de leite
  DC $00, $7E, $7E, $7E, $7E, $7E, $3C, $18
  DC $18, $00
-DOOR                            ; toca de rato tapada (fresta)
- DC $00, $FF, $E7, $E7, $E7, $E7, $E7, $FF
+DOOR                            ; toca de rato fechada (arco pequeno)
+ DC $00, $C3, $C3, $C3, $E7, $E7, $FF, $FF
  DC $FF, $FF
-ODOOR                           ; toca de rato aberta (arco)
+ODOOR                           ; toca de rato aberta (arco alto, estilo Tom & Jerry)
  DC $00, $C3, $C3, $C3, $C3, $C3, $C3, $E7
- DC $FF, $FF
+ DC $E7, $FF
 SPACE
 SPACE10
 	DC	$00, $00, $00, $00
@@ -2664,12 +2664,12 @@ URNC                            ; tigela azul, borda clara, leite branco no topo
 JUGC                            ; garrafa branca, tampa vermelha
  DC $00, $0E, $0E, $0E, $0E, $0E, $0E, $4A
  DC $4A, $00
-DOORC                           ; parede de tijolo (cores originais mantidas)
- DC $00, $12, $12, $16, $12, $12, $12, $16
- DC $12, $12
+DOORC                           ; portinha toda amarela
+ DC $00, $1E, $1E, $1E, $1E, $1E, $1E, $1E
+ DC $1E, $1E
 ODOORC
- DC $00, $12, $12, $16, $12, $12
- DC $12, $16, $12, $12
+ DC $00, $1E, $1E, $1E, $1E, $1E
+ DC $1E, $1E, $1E, $1E
 MAXLIMS	
 	DC	$94, $87
 MINLIMS
