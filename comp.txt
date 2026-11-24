@@ -1,2 +1,2 @@
-.\dasm.exe .\CHEESECHASE.ASM -f3
-Rename-Item .\a.out CheeseChase.bin
+.\dasm.exe .\FOODHUNTING_RAT.ASM -f3
+Rename-Item .\a.out FoodHuntingRat.bin
